@@ -1,6 +1,6 @@
-public class Task {
-    private final String description;
-    private boolean isMarked;
+public abstract class Task {
+    protected String description;
+    protected boolean isMarked;
 
     public Task(String description) {
         this.description = description;
@@ -26,4 +26,7 @@ public class Task {
     public String getStatus() {
         return (isMarked ? "[X]" : "[ ]");
     }
+
+    public abstract String getTypeIcon();
+    public abstract String toString();
 }
