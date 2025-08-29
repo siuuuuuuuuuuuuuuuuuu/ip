@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Bobby {
     private static final String EXIT_COMMAND = "bye";
     private static final String LIST_COMMAND = "list";
+    private static final String DELETE_COMMAND = "delete";
 
     public static void main(String[] args) {
         System.out.println("Hello! I'm Bobby\nHow can I help you?");
@@ -23,7 +24,10 @@ public class Bobby {
                         Task t = tasks.get(i);
                         System.out.println((i + 1) + ". " + t);
                     }
-                } else if (userInput.startsWith("todo")) {
+                } else if (userInput.startsWith(DELETE_COMMAND)) {
+                    handleDeleteCommand(userInput, tasks);
+                }
+                else if (userInput.startsWith("todo")) {
                     handleTodoCommand(userInput, tasks);
                 } else if (userInput.startsWith("deadline")) {
                     handleDeadlineCommand(userInput, tasks);
@@ -79,5 +83,23 @@ public class Bobby {
         tasks.add(t);
         System.out.println("Got it. I've added this task:\n  " + t);
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+    }
+
+    private static void handleDeleteCommand(String userInput, ArrayList<Task> tasks) throws BobbyException {
+        String arg = userInput.length() > 6 ? userInput.substring(6).trim() : "";
+        if (arg.isEmpty()) {
+            throw new BobbyException("OOPS!!! Please specify the task number to delete.");
+        }
+        try {
+            int index = Integer.parseInt(arg) - 1;
+            if (index < 0 || index >= tasks.size()) {
+                throw new BobbyException("OOPS!!! The task number is invalid.");
+            }
+            Task removed = tasks.remove(index);
+            System.out.println("Noted. I've removed this task:\n  " + removed);
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        } catch (NumberFormatException e) {
+            throw new BobbyException("OOPS!!! Please enter a valid task number.");
+        }
     }
 }
