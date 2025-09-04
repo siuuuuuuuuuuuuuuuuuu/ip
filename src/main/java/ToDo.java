@@ -12,5 +12,10 @@ public class ToDo extends Task {
     public String toString() {
         return getTypeIcon() + getStatus() + " " + getDescription();
     }
+
+    @Override
+    public String toStorageString() {
+        return "TODO | " + (isMarked ? "1" : "0") + " | " + description;
+    }
 }
 

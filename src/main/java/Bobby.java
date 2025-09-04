@@ -10,6 +10,12 @@ public class Bobby {
         System.out.println("Hello! I'm Bobby\nHow can I help you?");
         Scanner scanner = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
+        try {
+            tasks = Storage.loadTasks();
+        } catch (Exception e) {
+            System.out.println("Error loading tasks: " + e.getMessage());
+            tasks = new ArrayList<>();
+        }
 
         while (true) {
             try {
@@ -26,18 +32,23 @@ public class Bobby {
                     }
                 } else if (userInput.startsWith(DELETE_COMMAND)) {
                     handleDeleteCommand(userInput, tasks);
-                }
-                else if (userInput.startsWith("todo")) {
+                    Storage.saveTasks(tasks);
+                } else if (userInput.startsWith("todo")) {
                     handleTodoCommand(userInput, tasks);
+                    Storage.saveTasks(tasks);
                 } else if (userInput.startsWith("deadline")) {
                     handleDeadlineCommand(userInput, tasks);
+                    Storage.saveTasks(tasks);
                 } else if (userInput.startsWith("event")) {
                     handleEventCommand(userInput, tasks);
+                    Storage.saveTasks(tasks);
                 } else if (!userInput.isEmpty()) {
                     throw new BobbyException("Whatdatmean");
                 }
             } catch (BobbyException e) {
                 System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println("An error occurred while saving tasks: " + e.getMessage());
             }
         }
         scanner.close();
@@ -103,3 +114,4 @@ public class Bobby {
         }
     }
 }
+
