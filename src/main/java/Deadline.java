@@ -10,8 +10,14 @@ public class Deadline extends Task {
     public String getTypeIcon() {
         return "[D]";
     }
+
     @Override
     public String toString() {
         return getTypeIcon() + getStatus() + " " + getDescription() + " (by: " + by + ")";
+    }
+
+    @Override
+    public String toStorageString() {
+        return "DEADLINE | " + (isMarked ? "1" : "0") + description + " | " + by;
     }
 }

@@ -17,4 +17,9 @@ public class Event extends Task {
     public String toString() {
         return getTypeIcon() + getStatus() + " " + getDescription() + " (from: " + from + " to: " + to + ")";
     }
+
+    @Override
+    public String toStorageString() {
+        return "EVENT | " + (isMarked ? "1" : "0") + " | " + description + " | " + from + " | " + to;
+    }
 }
