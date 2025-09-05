@@ -51,6 +51,8 @@ public class Storage {
                     tasks.add(task);
                 }
             }
+        } catch (BobbyException e) {
+            System.out.println("Whatdatmean error loading tasks: " + e.getMessage());
         }
         return tasks;
    }

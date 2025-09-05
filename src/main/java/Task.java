@@ -1,7 +1,7 @@
 public abstract class Task {
     protected String description;
     public abstract String toStorageString();
-    public static Task fromStorageString(String line) {
+    public static Task fromStorageString(String line) throws BobbyException {
         String[] parts = line.split("\\|");
         String type = parts[0];
         switch (type) {
@@ -24,7 +24,7 @@ public abstract class Task {
                 }
                 return event;
             default:
-                throw new IllegalArgumentException("Unknown task type: " + type);
+                throw new BobbyException("Unknown task type: " + type);
         }
     }
     protected boolean isMarked;
