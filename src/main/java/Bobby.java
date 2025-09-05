@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -42,6 +45,8 @@ public class Bobby {
                 } else if (userInput.startsWith("event")) {
                     handleEventCommand(userInput, tasks);
                     Storage.saveTasks(tasks);
+                } else if (userInput.startsWith("find")) {
+                    handleFindCommand(userInput, tasks);
                 } else if (!userInput.isEmpty()) {
                     throw new BobbyException("Whatdatmean");
                 }
@@ -111,6 +116,47 @@ public class Bobby {
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         } catch (NumberFormatException e) {
             throw new BobbyException("OOPS!!! Please enter a valid task number.");
+        }
+    }
+
+    private static void handleFindCommand(String userInput, ArrayList<Task> tasks) throws BobbyException {
+        String dateString = userInput.length() > 4 ? userInput.substring(4).trim() : "";
+        if (dateString.isEmpty()) {
+            throw new BobbyException("Whatdatmean the date is empty");
+        }
+
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+            LocalDate searchDate = LocalDate.parse(dateString, formatter);
+
+            ArrayList<Task> matchingTasks = new ArrayList<>();
+            for (Task t : tasks) {
+                if (t instanceof Deadline) {
+                    Deadline d = (Deadline) t;
+                    if (d.getBy().toLocalDate().equals(searchDate)) {
+                        matchingTasks.add(t);
+                    }
+                } else if (t instanceof Event) {
+                    Event e = (Event) t;
+                    LocalDate eventFromDate = e.getFrom().toLocalDate();
+                    LocalDate eventToDate = e.getTo().toLocalDate();
+                    if (!searchDate.isBefore(eventFromDate) && !searchDate.isAfter(eventToDate)) {
+                        matchingTasks.add(t);
+                    }
+                }
+            }
+
+            if (matchingTasks.isEmpty()) {
+                System.out.println("No tasks bro you are free on " + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
+            } else {
+                System.out.println("Bro here are the tasks on " + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
+                for (int i = 0; i < matchingTasks.size(); i++) {
+                    Task t = matchingTasks.get(i);
+                    System.out.println((i + 1) + ". " + t);
+                }
+            }
+        } catch (DateTimeParseException e) {
+            throw new BobbyException("Whatdatmean the date format is wrong. Use d/M/yyyy like 2/12/2019");
         }
     }
 }
