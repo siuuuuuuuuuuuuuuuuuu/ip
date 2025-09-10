@@ -9,6 +9,25 @@ public class Bobby {
     private static final String LIST_COMMAND = "list";
     private static final String DELETE_COMMAND = "delete";
 
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    public Bobby(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            tasks = new TaskList(storage.loadTasks());
+        } catch (BobbyException e) {
+            ui.showLoadingError(e.getMessage());
+            tasks = new TaskList();
+        }
+    }
+
+    public void run() {
+        
+    }
+
     public static void main(String[] args) {
         System.out.println("Hello! I'm Bobby\nHow can I help you?");
         Scanner scanner = new Scanner(System.in);
