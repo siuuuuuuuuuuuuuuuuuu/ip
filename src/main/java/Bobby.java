@@ -8,7 +8,6 @@ public class Bobby {
     private static final String EXIT_COMMAND = "bye";
     private static final String LIST_COMMAND = "list";
     private static final String DELETE_COMMAND = "delete";
-
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
@@ -33,7 +32,7 @@ public class Bobby {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
         try {
-            tasks = Storage.loadTasks();
+            tasks = storage.loadTasks();
         } catch (Exception e) {
             System.out.println("Error loading tasks: " + e.getMessage());
             tasks = new ArrayList<>();
@@ -54,16 +53,16 @@ public class Bobby {
                     }
                 } else if (userInput.startsWith(DELETE_COMMAND)) {
                     handleDeleteCommand(userInput, tasks);
-                    Storage.saveTasks(tasks);
+                    storage.saveTasks(tasks);
                 } else if (userInput.startsWith("todo")) {
                     handleTodoCommand(userInput, tasks);
-                    Storage.saveTasks(tasks);
+                    storage.saveTasks(tasks);
                 } else if (userInput.startsWith("deadline")) {
                     handleDeadlineCommand(userInput, tasks);
-                    Storage.saveTasks(tasks);
+                    storage.saveTasks(tasks);
                 } else if (userInput.startsWith("event")) {
                     handleEventCommand(userInput, tasks);
-                    Storage.saveTasks(tasks);
+                    storage.saveTasks(tasks);
                 } else if (userInput.startsWith("find")) {
                     handleFindCommand(userInput, tasks);
                 } else if (!userInput.isEmpty()) {

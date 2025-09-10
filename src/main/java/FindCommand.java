@@ -1,4 +1,2 @@
-package PACKAGE_NAME;
-
-public class FindCommanfc {
+public class FindCommand {
 }

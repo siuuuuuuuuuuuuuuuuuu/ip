@@ -1,2 +1,2 @@
-public class AddCommand {
+public class AddCommand extends Command {
 }

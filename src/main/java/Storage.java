@@ -3,12 +3,15 @@ import java.nio.file.*;
 import java.util.ArrayList;
 
 public class Storage {
-    private static final String DIR_PATH = "data";
-    private static final String FILE_PATH = DIR_PATH + File.separator + "tasks.txt";
+    private String filePath;
 
-    public static void saveTasks(ArrayList<Task> tasks) throws IOException {
-        Files.createDirectories(Paths.get(DIR_PATH));
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(FILE_PATH))) {
+    public Storage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public void saveTasks(ArrayList<Task> tasks) throws IOException {
+        Files.createDirectories(Paths.get(filePath));
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath))) {
             for (Task task : tasks) {
                 writer.write(task.toStorageString());
                 writer.newLine();
@@ -16,13 +19,13 @@ public class Storage {
         }
     }
 
-   public static ArrayList<Task> loadTasks() throws IOException {
+   public ArrayList<Task> loadTasks() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
-        Path path = Paths.get(FILE_PATH);
+        Path path = Paths.get(filePath);
         if (!Files.exists(path)) {
             return tasks; // Return empty list if file doesn't exist
         }
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(" \\| ");
@@ -52,7 +55,7 @@ public class Storage {
                 }
             }
         } catch (BobbyException e) {
-            System.out.println("Whatdatmean error loading tasks: " + e.getMessage());
+            System.out.println("error loading tasks gg: " + e.getMessage());
         }
         return tasks;
    }
