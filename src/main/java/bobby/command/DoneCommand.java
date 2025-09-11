@@ -1,4 +1,6 @@
-package bobby;
+package bobby.command;
+
+import bobby.*;
 
 public class DoneCommand extends Command {
     private final int taskIndex;

@@ -1,4 +1,6 @@
-package bobby;
+package bobby.command;
+
+import bobby.*;
 
 public class AddEventCommand extends Command {
     private final String description;

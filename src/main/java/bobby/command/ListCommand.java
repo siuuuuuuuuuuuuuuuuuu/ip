@@ -1,4 +1,8 @@
-package bobby;
+package bobby.command;
+
+import bobby.Storage;
+import bobby.TaskList;
+import bobby.Ui;
 
 public class ListCommand extends Command {
     @Override

@@ -1,6 +1,10 @@
-package bobby;
+package bobby.command;
 
 import java.util.ArrayList;
+import bobby.Storage;
+import bobby.Task;
+import bobby.TaskList;
+import bobby.Ui;
 
 public class FindCommand extends Command {
     private final String keyword;

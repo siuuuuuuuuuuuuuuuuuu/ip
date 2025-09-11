@@ -1,4 +1,6 @@
-package bobby;
+package bobby.command;
+
+import bobby.*;
 
 public class AddTodoCommand extends Command {
     private final String description;

@@ -1,4 +1,11 @@
-package bobby;
+package bobby.command;
+import bobby.BobbyException;
+import bobby.Storage;
+import bobby.TaskList;
+import bobby.Ui;
+import bobby.Deadline;
+import bobby.Task;
+
 
 public class AddDeadlineCommand extends Command {
     private final String description;

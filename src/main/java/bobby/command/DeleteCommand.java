@@ -1,4 +1,11 @@
-package bobby;
+package bobby.command;
+
+import bobby.BobbyException;
+import bobby.Storage;
+import bobby.Task;
+import bobby.TaskList;
+import bobby.Ui;
+
 
 public class DeleteCommand extends Command {
     private final int taskIndex;
