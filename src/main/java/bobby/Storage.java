@@ -5,7 +5,7 @@ import java.nio.file.*;
 import java.util.ArrayList;
 
 public class Storage {
-    private String filePath;
+    private final String filePath;
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -18,7 +18,7 @@ public class Storage {
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (Task task : tasks) {
-                writer.write(task.toStorageString());
+                writer.write(task.toSaveFormat());
                 writer.newLine();
             }
         }
@@ -35,25 +35,30 @@ public class Storage {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(" \\| ");
                 String type = parts[0];
-                boolean isMarked = parts[1].equals("1");
+                boolean isDone = parts[1].equals("1");
                 String description = parts[2];
                 Task task = null;
-                switch (type) {
-                    case "TODO":
-                        task = new ToDo(description);
-                        break;
-                    case "DEADLINE":
-                        String by = parts[3];
-                        task = new Deadline(description, by);
-                        break;
-                    case "EVENT":
-                        String from = parts[3];
-                        String to = parts[4];
-                        task = new Event(description, from, to);
-                        break;
+                try {
+                    switch (type) {
+                        case "T":
+                            task = new ToDo(description);
+                            break;
+                        case "D":
+                            String by = parts[3];
+                            task = new Deadline(description, by);
+                            break;
+                        case "E":
+                            String from = parts[3];
+                            String to = parts[4];
+                            task = new Event(description, from, to);
+                            break;
+                    }
+                } catch (Exception e) {
+                    // Skip malformed lines
+                    continue;
                 }
-                if (task != null && isMarked) {
-                    task.mark();
+                if (task != null && isDone) {
+                    task.markAsDone();
                 }
                 if (task != null) {
                     tasks.add(task);
