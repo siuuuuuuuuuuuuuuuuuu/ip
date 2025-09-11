@@ -1,3 +1,5 @@
+package bobby;
+
 public abstract class Command {
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException;
     public boolean isExit() {

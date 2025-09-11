@@ -1,3 +1,5 @@
+package bobby;
+
 import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
@@ -10,8 +12,11 @@ public class Storage {
     }
 
     public void saveTasks(ArrayList<Task> tasks) throws IOException {
-        Files.createDirectories(Paths.get(filePath));
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath))) {
+        Path path = Paths.get(filePath);
+        if (!Files.exists(path.getParent())) {
+            Files.createDirectories(path.getParent());
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (Task task : tasks) {
                 writer.write(task.toStorageString());
                 writer.newLine();
@@ -19,7 +24,7 @@ public class Storage {
         }
     }
 
-   public ArrayList<Task> loadTasks() throws IOException {
+    public ArrayList<Task> loadTasks() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         Path path = Paths.get(filePath);
         if (!Files.exists(path)) {
@@ -54,9 +59,7 @@ public class Storage {
                     tasks.add(task);
                 }
             }
-        } catch (BobbyException e) {
-            System.out.println("error loading tasks gg: " + e.getMessage());
         }
         return tasks;
-   }
+    }
 }
