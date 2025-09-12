@@ -7,7 +7,7 @@ public class Ui {
     private final Scanner scanner = new Scanner(System.in);
 
     public void showWelcome() {
-        System.out.println("Hi Im Bobby\nWhat can I do for you?");
+        System.out.println("hi im Bobby\nWhat can I do for you today?");
     }
 
     public void showError(String msg) {
@@ -15,20 +15,20 @@ public class Ui {
     }
 
     public void showTaskMarkedDone(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
+        System.out.println("Task marked as done:");
         System.out.println("  " + task);
     }
 
     public void showTaskAdded(Task task, int size) {
-        System.out.println("Got it. I've added this task:");
+        System.out.println("Task added:");
         System.out.println("  " + task);
-        System.out.println("Now you have " + size + " tasks in the list.");
+        System.out.println("You now have " + size + " tasks in the list.");
     }
 
     public void showTaskDeleted(Task task, int size) {
-        System.out.println("Noted. I've removed this task:");
+        System.out.println("Task removed:");
         System.out.println("  " + task);
-        System.out.println("Now you have " + size + " tasks in the list.");
+        System.out.println("You now have " + size + " tasks in the list.");
     }
 
     public void showTaskList(ArrayList<Task> tasks) {

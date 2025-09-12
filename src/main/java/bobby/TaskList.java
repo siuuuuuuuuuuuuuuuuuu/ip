@@ -1,7 +1,6 @@
 package bobby;
 
 import java.util.ArrayList;
-import bobby.command.Command;
 
 public class TaskList {
     private final ArrayList<Task> tasks;
