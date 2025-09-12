@@ -4,13 +4,28 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 
+/**
+ * Handles saving and loading tasks to and from a file for persistence.
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Constructs a Storage object with the specified file path.
+     *
+     * @param filePath Path to the file for storing tasks.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Saves the given list of tasks to the file.
+     * Creates parent directories if they do not exist.
+     *
+     * @param tasks List of tasks to save.
+     * @throws IOException If an I/O error occurs during saving.
+     */
     public void saveTasks(ArrayList<Task> tasks) throws IOException {
         Path path = Paths.get(filePath);
         if (!Files.exists(path.getParent())) {
@@ -24,6 +39,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the file.
+     * Returns an empty list if the file does not exist or lines are malformed.
+     *
+     * @return ArrayList of loaded tasks.
+     * @throws IOException If an I/O error occurs during loading.
+     */
     public ArrayList<Task> loadTasks() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         Path path = Paths.get(filePath);

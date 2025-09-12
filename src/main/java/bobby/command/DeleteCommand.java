@@ -6,14 +6,29 @@ import bobby.Task;
 import bobby.TaskList;
 import bobby.Ui;
 
-
+/**
+ * Command to delete a specific task from the task list.
+ */
 public class DeleteCommand extends Command {
     private final int taskIndex;
 
+    /**
+     * Constructs a DeleteCommand for the specified task index.
+     *
+     * @param taskIndex Index of the task to delete.
+     */
     public DeleteCommand(int taskIndex) {
         this.taskIndex = taskIndex;
     }
 
+    /**
+     * Executes the delete command, removing the specified task and saving changes.
+     *
+     * @param tasks The current list of tasks.
+     * @param ui The user interface for displaying messages.
+     * @param storage The storage handler for saving tasks.
+     * @throws BobbyException If the task index is invalid.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
         if (taskIndex < 0 || taskIndex >= tasks.size()) {
