@@ -13,7 +13,7 @@ public class Ui {
      * Displays the welcome message to the user.
      */
     public void showWelcome() {
-        System.out.println("Hi Im Bobby\nWhat can I do for you?");
+        System.out.println("hi im Bobby\nWhat can I do for you today?");
     }
 
     /**
@@ -31,7 +31,7 @@ public class Ui {
      * @param task The task that was marked as done.
      */
     public void showTaskMarkedDone(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
+        System.out.println("Task marked as done:");
         System.out.println("  " + task);
     }
 
@@ -42,9 +42,9 @@ public class Ui {
      * @param size The new size of the task list.
      */
     public void showTaskAdded(Task task, int size) {
-        System.out.println("Got it. I've added this task:");
+        System.out.println("Task added:");
         System.out.println("  " + task);
-        System.out.println("Now you have " + size + " tasks in the list.");
+        System.out.println("You now have " + size + " tasks in the list.");
     }
 
     /**
@@ -54,9 +54,9 @@ public class Ui {
      * @param size The new size of the task list.
      */
     public void showTaskDeleted(Task task, int size) {
-        System.out.println("Noted. I've removed this task:");
+        System.out.println("Task removed:");
         System.out.println("  " + task);
-        System.out.println("Now you have " + size + " tasks in the list.");
+        System.out.println("You now have " + size + " tasks in the list.");
     }
 
     /**

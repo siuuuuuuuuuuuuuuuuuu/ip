@@ -39,7 +39,7 @@ public class DeleteCommand extends Command {
         try {
             storage.saveTasks(tasks.getAll());
         } catch (Exception e) {
-            ui.showError("Failed to save tasks fam: " + e.getMessage());
+            ui.showError("Failed to save tasks: " + e.getMessage());
         }
     }
 }

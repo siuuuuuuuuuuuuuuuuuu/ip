@@ -1,7 +1,6 @@
 package bobby;
 
 import java.util.ArrayList;
-import bobby.command.Command;
 
 /**
  * Manages a list of Task objects, providing operations to add, delete, retrieve, and search tasks.
