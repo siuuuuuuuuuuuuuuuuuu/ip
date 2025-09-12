@@ -8,10 +8,10 @@ import java.time.format.DateTimeParseException;
  * Represents an event task with a start and end time.
  */
 public class Event extends Task {
-    private final LocalDateTime from;
-    private final LocalDateTime to;
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
+    private final LocalDateTime from;
+    private final LocalDateTime to;
 
     /**
      * Constructs an Event task with the given description and string dates.
@@ -70,7 +70,10 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + (isDone ? "[X] " : "[ ] ") + description + " (from: " + from.format(OUTPUT_FORMAT) + " to: " + to.format(OUTPUT_FORMAT) + ")";
+        String status = isDone ? "[X] " : "[ ] ";
+        String fromStr = from.format(OUTPUT_FORMAT);
+        String toStr = to.format(OUTPUT_FORMAT);
+        return "[E]" + status + description + " (from: " + fromStr + " to: " + toStr + ")";
     }
 
     /**
@@ -80,6 +83,8 @@ public class Event extends Task {
      */
     @Override
     public String toSaveFormat() {
-        return String.format("E | %d | %s | %s | %s", isDone ? 1 : 0, description, from.format(INPUT_FORMAT), to.format(INPUT_FORMAT));
+        String fromStr = from.format(INPUT_FORMAT);
+        String toStr = to.format(INPUT_FORMAT);
+        return String.format("E | %d | %s | %s | %s", isDone ? 1 : 0, description, fromStr, toStr);
     }
 }
