@@ -1,7 +1,13 @@
 package bobby;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
@@ -62,18 +68,21 @@ public class Storage {
                 Task task = null;
                 try {
                     switch (type) {
-                        case "T":
-                            task = new ToDo(description);
-                            break;
-                        case "D":
-                            String by = parts[3];
-                            task = new Deadline(description, by);
-                            break;
-                        case "E":
-                            String from = parts[3];
-                            String to = parts[4];
-                            task = new Event(description, from, to);
-                            break;
+                    case "T":
+                        task = new ToDo(description);
+                        break;
+                    case "D":
+                        String by = parts[3];
+                        task = new Deadline(description, by);
+                        break;
+                    case "E":
+                        String from = parts[3];
+                        String to = parts[4];
+                        task = new Event(description, from, to);
+                        break;
+                    default:
+                        // Unknown type, skip
+                        break;
                     }
                 } catch (Exception e) {
                     // Skip malformed lines

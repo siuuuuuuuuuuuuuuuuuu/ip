@@ -1,6 +1,10 @@
 package bobby.command;
 
-import bobby.*;
+import bobby.BobbyException;
+import bobby.TaskList;
+import bobby.Ui;
+import bobby.ToDo;
+import bobby.Task;
 
 /**
  * Command to add a new todo task to the task list.
