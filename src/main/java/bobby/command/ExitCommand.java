@@ -14,9 +14,8 @@ public class ExitCommand extends Command {
      * @param storage The storage handler (not used in this command).
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.showLine();
-        System.out.println("Goodbye! Have a great day.");
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        return "Goodbye! Have a great day.";
     }
 
     /**

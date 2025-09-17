@@ -16,9 +16,10 @@ public abstract class Command {
      * @param tasks The current list of tasks.
      * @param ui The user interface for displaying messages.
      * @param storage The storage handler for saving/loading tasks.
+     * @return A string message describing the result of the command.
      * @throws BobbyException If an error occurs during command execution.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException;
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException;
 
     /**
      * Returns whether this command should exit the application.

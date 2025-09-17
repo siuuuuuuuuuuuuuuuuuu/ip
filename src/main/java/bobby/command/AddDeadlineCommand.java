@@ -34,14 +34,18 @@ public class AddDeadlineCommand extends Command {
      * @throws BobbyException If an error occurs during task creation.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
         Task deadline = new Deadline(description, by);
         tasks.add(deadline);
-        ui.showTaskAdded(deadline, tasks.size());
+        StringBuilder response = new StringBuilder();
+        response.append("Added: ").append(deadline.toString()).append(System.lineSeparator());
+        response.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
         try {
             storage.saveTasks(tasks.getAll());
         } catch (Exception e) {
-            ui.showError("Failed to save tasks fam: " + e.getMessage());
+            response.append(System.lineSeparator())
+                    .append("Failed to save tasks fam: ").append(e.getMessage());
         }
+        return response.toString();
     }
 }

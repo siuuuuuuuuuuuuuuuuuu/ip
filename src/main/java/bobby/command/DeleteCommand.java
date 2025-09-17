@@ -30,7 +30,7 @@ public class DeleteCommand extends Command {
      * @throws BobbyException If the task index is invalid.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
         if (taskIndex < 0 || taskIndex >= tasks.size()) {
             throw new BobbyException(
                 "Whatdatmean thats not a task number fam choose a number from 1 to "
@@ -38,11 +38,16 @@ public class DeleteCommand extends Command {
             );
         }
         Task removed = tasks.delete(taskIndex);
-        ui.showTaskDeleted(removed, tasks.size());
+        StringBuilder response = new StringBuilder();
+        response.append("Noted. I've removed this task:").append(System.lineSeparator())
+                .append(removed.toString()).append(System.lineSeparator())
+                .append("Now you have ").append(tasks.size()).append(" tasks in the list.");
         try {
             storage.saveTasks(tasks.getAll());
         } catch (Exception e) {
-            ui.showError("Failed to save tasks: " + e.getMessage());
+            response.append(System.lineSeparator())
+                    .append("Failed to save tasks: ").append(e.getMessage());
         }
+        return response.toString();
     }
 }
