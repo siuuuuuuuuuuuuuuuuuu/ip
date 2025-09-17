@@ -36,6 +36,11 @@ public class Ui {
         System.out.println("  " + task);
     }
 
+    public void showTaskMarkedNotDone(Task task) {
+        System.out.println("Task marked as not done:");
+        System.out.println("  " + task);
+    }
+
     /**
      * Displays a message indicating a task has been added.
      *

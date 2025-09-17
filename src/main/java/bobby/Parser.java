@@ -5,10 +5,11 @@ import bobby.command.AddEventCommand;
 import bobby.command.AddTodoCommand;
 import bobby.command.Command;
 import bobby.command.DeleteCommand;
-import bobby.command.DoneCommand;
+import bobby.command.MarkCommand;
 import bobby.command.ExitCommand;
 import bobby.command.FindCommand;
 import bobby.command.ListCommand;
+import bobby.command.UnmarkCommand;
 
 /**
  * Parses user input commands and returns the corresponding Command object.
@@ -27,9 +28,12 @@ public class Parser {
         switch (command) {
         case "list":
             return new ListCommand();
-        case "done":
+        case "mark":
             int doneIndex = Integer.parseInt(words[1]) - 1;
-            return new DoneCommand(doneIndex);
+            return new MarkCommand(doneIndex);
+        case "unmark":
+            int undoneIndex = Integer.parseInt(words[1]) - 1;
+            return new UnmarkCommand(undoneIndex);
         case "delete":
             int deleteIndex = Integer.parseInt(words[1]) - 1;
             return new DeleteCommand(deleteIndex);

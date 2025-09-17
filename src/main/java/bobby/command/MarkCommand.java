@@ -5,7 +5,7 @@ import bobby.*;
 /**
  * Command to mark a specific task as done.
  */
-public class DoneCommand extends Command {
+public class MarkCommand extends Command {
     private final int taskIndex;
 
     /**
@@ -13,7 +13,7 @@ public class DoneCommand extends Command {
      *
      * @param taskIndex Index of the task to mark as done.
      */
-    public DoneCommand(int taskIndex) {
+    public MarkCommand(int taskIndex) {
         this.taskIndex = taskIndex;
     }
 

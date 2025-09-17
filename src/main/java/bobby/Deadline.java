@@ -19,7 +19,10 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String by) {
         super(description);
+        assert description != null : "Description should not be null";
+        assert by != null : "Deadline date should not be null";
         this.by = LocalDateTime.parse(by, INPUT_FORMAT);
+        assert this.by != null : "Deadline date should not be null";
     }
 
     /**
@@ -30,6 +33,8 @@ public class Deadline extends Task {
      */
     public Deadline(String description, LocalDateTime by) {
         super(description);
+        assert description != null : "Description should not be null";
+        assert by != null : "Deadline date should not be null";
         this.by = by;
     }
 
@@ -39,6 +44,7 @@ public class Deadline extends Task {
      * @return The deadline as a LocalDateTime.
      */
     public LocalDateTime getBy() {
+        assert this.by != null : "Deadline date should not be null";
         return by;
     }
 
@@ -49,6 +55,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
+        assert this.by != null : "Deadline date should not be null";
         return "[D]" + (isDone ? "[X] " : "[ ] ") + description + " (by: " + by.format(OUTPUT_FORMAT) + ")";
     }
 
@@ -59,6 +66,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toSaveFormat() {
+        assert this.by != null : "Deadline date should not be null";
         return String.format("D | %d | %s | %s", isDone ? 1 : 0, description, by.format(INPUT_FORMAT));
     }
 }
