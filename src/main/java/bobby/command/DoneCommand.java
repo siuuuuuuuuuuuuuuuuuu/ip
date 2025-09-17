@@ -26,17 +26,21 @@ public class DoneCommand extends Command {
      * @throws BobbyException If the task index is invalid.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
         if (taskIndex < 0 || taskIndex >= tasks.size()) {
             throw new BobbyException("Whatdatmean thats not a task number fam choose a number from 1 to " + tasks.size());
         }
         Task task = tasks.get(taskIndex);
         task.markAsDone();
-        ui.showTaskMarkedDone(task);
+        StringBuilder response = new StringBuilder();
+        response.append("Nice! I've marked this task as done:").append(System.lineSeparator())
+                .append(task.toString());
         try {
             storage.saveTasks(tasks.getAll());
         } catch (Exception e) {
-            ui.showError("Failed to save tasks: " + e.getMessage());
+            response.append(System.lineSeparator())
+                    .append("Failed to save tasks: ").append(e.getMessage());
         }
+        return response.toString();
     }
 }

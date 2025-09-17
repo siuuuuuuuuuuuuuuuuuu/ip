@@ -58,4 +58,15 @@ public class Bobby {
     public static void main(String[] args) {
         new Bobby("data/tasks.txt").run();
     }
+
+    public String getResponse(String input) {
+        try {
+            Command command = Parser.parse(input);
+            return command.execute(tasks, ui, storage);
+        } catch (BobbyException e) {
+            return e.getMessage();
+        } catch (Exception e) {
+            return "An unexpected error occurred: " + e.getMessage();
+        }
+    }
 }

@@ -29,8 +29,17 @@ public class FindCommand extends Command {
      * @param storage The storage handler (not used in this command).
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         ArrayList<Task> found = tasks.find(keyword);
-        ui.showFoundTasks(found);
+        if (found.isEmpty()) {
+            return "No matching tasks found, fam!";
+        }
+        StringBuilder response = new StringBuilder("Here are the matching tasks in your list:");
+        for (int i = 0; i < found.size(); i++) {
+            response.append(System.lineSeparator())
+                    .append((i + 1)).append(". ")
+                    .append(found.get(i).toString());
+        }
+        return response.toString();
     }
 }

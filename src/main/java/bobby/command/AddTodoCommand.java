@@ -5,6 +5,7 @@ import bobby.TaskList;
 import bobby.Ui;
 import bobby.ToDo;
 import bobby.Task;
+import bobby.Storage;
 
 /**
  * Command to add a new todo task to the task list.
@@ -30,14 +31,18 @@ public class AddTodoCommand extends Command {
      * @throws BobbyException If an error occurs during task creation.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
         Task todo = new ToDo(description);
         tasks.add(todo);
-        ui.showTaskAdded(todo, tasks.size());
+        StringBuilder response = new StringBuilder();
+        response.append("Added: ").append(todo.toString()).append(System.lineSeparator());
+        response.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
         try {
             storage.saveTasks(tasks.getAll());
         } catch (Exception e) {
-            ui.showError("Failed to save tasks fam: " + e.getMessage());
+            response.append(System.lineSeparator())
+                    .append("Failed to save tasks fam: ").append(e.getMessage());
         }
+        return response.toString();
     }
 }

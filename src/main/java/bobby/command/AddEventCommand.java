@@ -5,6 +5,7 @@ import bobby.TaskList;
 import bobby.Ui;
 import bobby.Event;
 import bobby.Task;
+import bobby.Storage;
 
 /**
  * Command to add a new event task to the task list.
@@ -36,14 +37,18 @@ public class AddEventCommand extends Command {
      * @throws BobbyException If an error occurs during task creation.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
         Task event = new Event(description, from, to);
         tasks.add(event);
-        ui.showTaskAdded(event, tasks.size());
+        StringBuilder response = new StringBuilder();
+        response.append("Added: ").append(event.toString()).append(System.lineSeparator());
+        response.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
         try {
             storage.saveTasks(tasks.getAll());
         } catch (Exception e) {
-            ui.showError("Failed to save tasks fam: " + e.getMessage());
+            response.append(System.lineSeparator())
+                    .append("Failed to save tasks fam: ").append(e.getMessage());
         }
+        return response.toString();
     }
 }

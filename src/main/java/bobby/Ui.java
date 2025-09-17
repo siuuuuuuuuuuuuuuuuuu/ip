@@ -8,12 +8,13 @@ import java.util.Scanner;
  */
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
+    public static final String WELCOME_MESSAGE = "hi im Bobby\nWhat can I do for you today?";
 
     /**
      * Displays the welcome message to the user.
      */
     public void showWelcome() {
-        System.out.println("hi im Bobby\nWhat can I do for you today?");
+        System.out.println(WELCOME_MESSAGE);
     }
 
     /**
@@ -106,5 +107,14 @@ public class Ui {
      */
     public void showLoadingError(String msg) {
         System.out.println("Error loading tasks: " + msg);
+    }
+
+    /**
+     * Displays a generic message to the user.
+     *
+     * @param msg The message to display.
+     */
+    public void showMessage(String msg) {
+        System.out.println(msg);
     }
 }
