@@ -18,6 +18,7 @@ public class Bobby {
      * @param filePath Path to the file storing tasks.
      */
     public Bobby(String filePath) {
+        assert filePath != null : "File path should not be null";
         ui = new Ui();
         storage = new Storage(filePath);
         try {
@@ -60,6 +61,7 @@ public class Bobby {
     }
 
     public String getResponse(String input) {
+        assert input != null : "Input to getResponse should not be null";
         try {
             Command command = Parser.parse(input);
             return command.execute(tasks, ui, storage);

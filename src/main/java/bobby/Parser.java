@@ -23,6 +23,7 @@ public class Parser {
      * @throws BobbyException If the command is invalid or arguments are missing.
      */
     public static Command parse(String fullCommand) throws BobbyException {
+        assert fullCommand != null : "Input command should not be null";
         String[] words = fullCommand.trim().split(" ", 2);
         String command = words[0];
         switch (command) {
