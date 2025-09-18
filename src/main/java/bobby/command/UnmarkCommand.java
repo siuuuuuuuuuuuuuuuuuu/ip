@@ -29,16 +29,16 @@ public class UnmarkCommand extends Command {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
         if (taskIndex < 0 || taskIndex >= tasks.size()) {
-            throw new BobbyException("Whatdatmean thats not a task number fam choose a number from 1 to " + tasks.size());
+            throw new BobbyException("What that mean that's not a task number fam choose a number from 1 to " + tasks.size());
         }
         Task task = tasks.get(taskIndex);
         task.markAsNotDone();
         StringBuilder response = new StringBuilder();
         response.append("OK! I've unmarked this task:").append(System.lineSeparator())
-                .append(task.toString());
+                .append(task);
         try {
             storage.saveTasks(tasks.getAll());
-        } catch (Exception e) {
+        } catch (java.io.IOException e) {
             response.append(System.lineSeparator())
                     .append("Failed to save tasks: ").append(e.getMessage());
         }
