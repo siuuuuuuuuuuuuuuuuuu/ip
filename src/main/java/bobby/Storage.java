@@ -22,6 +22,7 @@ public class Storage {
      * @param filePath Path to the file for storing tasks.
      */
     public Storage(String filePath) {
+        assert filePath != null : "File path should not be null";
         this.filePath = filePath;
     }
 
@@ -33,6 +34,7 @@ public class Storage {
      * @throws IOException If an I/O error occurs during saving.
      */
     public void saveTasks(ArrayList<Task> tasks) throws IOException {
+        assert tasks != null : "Tasks list should not be null";
         Path path = Paths.get(filePath);
         if (!Files.exists(path.getParent())) {
             Files.createDirectories(path.getParent());
