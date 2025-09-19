@@ -61,6 +61,11 @@ public class Parser {
             return new FindCommand(words[1].trim());
         case "bye":
             return new ExitCommand();
+        case "viewschedule":
+            if (words.length < 2 || words[1].trim().isEmpty()) {
+                throw new BobbyException("Please specify a date in d/M/yyyy format, e.g., viewschedule 19/09/2025");
+            }
+            return new bobby.command.ViewScheduleCommand(words[1].trim());
         default:
             throw new BobbyException("Whatdatmean");
         }
