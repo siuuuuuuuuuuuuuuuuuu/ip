@@ -17,7 +17,7 @@ public class Deadline extends Task {
      * @param description Description of the deadline task.
      * @param by Deadline date as a string in d/M/yyyy HHmm format.
      */
-    public Deadline(String description, String by) {
+    public Deadline(final String description, final String by) {
         super(description);
         assert description != null : "Description should not be null";
         assert by != null : "Deadline date should not be null";
@@ -31,7 +31,7 @@ public class Deadline extends Task {
      * @param description Description of the deadline task.
      * @param by Deadline date as a LocalDateTime.
      */
-    public Deadline(String description, LocalDateTime by) {
+    public Deadline(final String description, final LocalDateTime by) {
         super(description);
         assert description != null : "Description should not be null";
         assert by != null : "Deadline date should not be null";
