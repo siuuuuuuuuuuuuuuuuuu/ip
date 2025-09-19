@@ -23,6 +23,7 @@ public class Ui {
      * @param msg The error message to display.
      */
     public void showError(String msg) {
+        assert msg != null : "Error message should not be null";
         System.out.println("Error: " + msg);
     }
 
@@ -32,11 +33,13 @@ public class Ui {
      * @param task The task that was marked as done.
      */
     public void showTaskMarkedDone(Task task) {
+        assert task != null : "Task should not be null";
         System.out.println("Task marked as done:");
         System.out.println("  " + task);
     }
 
     public void showTaskMarkedNotDone(Task task) {
+        assert task != null : "Task should not be null";
         System.out.println("Task marked as not done:");
         System.out.println("  " + task);
     }
@@ -48,6 +51,7 @@ public class Ui {
      * @param size The new size of the task list.
      */
     public void showTaskAdded(Task task, int size) {
+        assert task != null : "Task should not be null";
         System.out.println("Task added:");
         System.out.println("  " + task);
         System.out.println("You now have " + size + " tasks in the list.");
@@ -60,6 +64,7 @@ public class Ui {
      * @param size The new size of the task list.
      */
     public void showTaskDeleted(Task task, int size) {
+        assert task != null : "Task should not be null";
         System.out.println("Task removed:");
         System.out.println("  " + task);
         System.out.println("You now have " + size + " tasks in the list.");
@@ -71,9 +76,12 @@ public class Ui {
      * @param tasks The list of tasks to display.
      */
     public void showTaskList(ArrayList<Task> tasks) {
+        assert tasks != null : "Tasks list should not be null";
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i));
+            Task task = tasks.get(i);
+            assert task != null : "Task in list should not be null";
+            System.out.println((i + 1) + ". " + task);
         }
     }
 
@@ -83,9 +91,12 @@ public class Ui {
      * @param tasks The list of matching tasks to display.
      */
     public void showFoundTasks(ArrayList<Task> tasks) {
+        assert tasks != null : "Tasks list should not be null";
         System.out.println("Here are the matching tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i));
+            Task task = tasks.get(i);
+            assert task != null : "Task in found list should not be null";
+            System.out.println((i + 1) + ". " + task);
         }
     }
 
