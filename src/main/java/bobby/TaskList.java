@@ -1,7 +1,9 @@
 package bobby;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
+import java.util.Comparator;
 /**
  * Manages a list of Task objects, providing operations to add, delete, retrieve, and search tasks.
  */
@@ -85,5 +87,33 @@ public class TaskList {
             }
         }
         return found;
+    }
+
+    /**
+     * Returns a list of tasks scheduled for the given date.
+     * Includes Deadlines due on that date and Events occurring on that date.
+     * ToDos are not included as they have no date.
+     *
+     * @param date The date to filter tasks by.
+     * @return List of tasks scheduled for the date.
+     */
+    public ArrayList<Task> getTasksForDate(LocalDate date) {
+        ArrayList<Task> result = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task instanceof Deadline) {
+                Deadline d = (Deadline) task;
+                if (d.getBy().toLocalDate().equals(date)) {
+                    result.add(task);
+                }
+            } else if (task instanceof Event) {
+                Event e = (Event) task;
+                LocalDate from = e.getFrom().toLocalDate();
+                LocalDate to = e.getTo().toLocalDate();
+                if ((date.isEqual(from) || date.isAfter(from)) && (date.isEqual(to) || date.isBefore(to))) {
+                    result.add(task);
+                }
+            }
+        }
+        return result;
     }
 }

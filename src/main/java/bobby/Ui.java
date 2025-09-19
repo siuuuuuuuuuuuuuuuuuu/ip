@@ -1,5 +1,6 @@
 package bobby;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -132,5 +133,39 @@ public class Ui {
      */
     public void showMessage(String msg) {
         System.out.println(msg);
+    }
+
+    /**
+     * Displays a message indicating a task has been updated.
+     *
+     * @param task The task that was updated.
+     * @return The update confirmation message.
+     */
+    public String showUpdate(Task task) {
+        String msg = "Task updated:\n  " + task;
+        System.out.println(msg);
+        return msg;
+    }
+
+    /**
+     * Displays the schedule for a specific date.
+     *
+     * @param date The date for which to show the schedule.
+     * @param tasks The list of tasks scheduled for that date.
+     * @return The schedule as a string (for GUI or CLI).
+     */
+    public String showScheduleForDate(LocalDate date, ArrayList<Task> tasks) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Schedule for ").append(date).append(":\n");
+        if (tasks.isEmpty()) {
+            sb.append("No tasks scheduled for this date.\n");
+        } else {
+            for (int i = 0; i < tasks.size(); i++) {
+                sb.append((i + 1)).append(". ").append(tasks.get(i)).append("\n");
+            }
+        }
+        String result = sb.toString();
+        System.out.print(result);
+        return result;
     }
 }
