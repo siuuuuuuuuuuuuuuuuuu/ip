@@ -1,6 +1,8 @@
 package bobby.gui;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +15,7 @@ import bobby.main.Bobby;
  * Main entry point for the JavaFX GUI application.
  */
 public class Main extends Application {
-    private final Bobby bobby = new Bobby("data/tasks.txt");
+    private Bobby bobby;
 
     /**
      * Starts the JavaFX application and sets up the main window.
@@ -23,6 +25,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            // Determine the directory of the running JAR or class files
+            String dataFilePath = getDataFilePath();
+            bobby = new Bobby(dataFilePath);
+
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
@@ -35,6 +41,20 @@ public class Main extends Application {
         } catch (IOException e) {
             // Use robust logging instead of printStackTrace
             System.err.println("Failed to load main window: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Returns the absolute path to the data/tasks.txt file, always next to the JAR or class files.
+     */
+    private String getDataFilePath() {
+        try {
+            File jarDir = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
+            File dataFile = new File(jarDir, "data/tasks.txt");
+            return dataFile.getAbsolutePath();
+        } catch (URISyntaxException e) {
+            // Fallback: use working directory
+            return "data/tasks.txt";
         }
     }
 }
