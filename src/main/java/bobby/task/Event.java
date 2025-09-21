@@ -1,4 +1,6 @@
-package bobby;
+package bobby.task;
+
+import bobby.bobbyexception.BobbyException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

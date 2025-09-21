@@ -33,6 +33,13 @@ public class DialogBox extends HBox{
 
         dialog.setText(text);
         displayPicture.setImage(img);
+        // Add default style class
+        dialog.getStyleClass().add("dialog-label");
+        // Load CSS if not already loaded
+        if (getStylesheets().isEmpty()) {
+            getStylesheets().add(getClass().getResource("/view/dialogbox.css").toExternalForm());
+        }
+        // Removed circular clip logic as per user request
     }
 
     /**
@@ -47,12 +54,29 @@ public class DialogBox extends HBox{
     }
 
     public static DialogBox getUserDialog(String s, Image i) {
-        return new DialogBox(s, i);
+        DialogBox db = new DialogBox(s, i);
+        db.dialog.getStyleClass().add("user-dialog");
+        db.setAlignment(Pos.TOP_RIGHT);
+        db.displayPicture.setFitWidth(72);
+        db.displayPicture.setFitHeight(72);
+        return db;
     }
 
     public static DialogBox getBobbyDialog(String s, Image i) {
-        var db = new DialogBox(s, i);
+        DialogBox db = new DialogBox(s, i);
+        db.dialog.getStyleClass().add("bot-dialog");
         db.flip();
+        db.displayPicture.setFitWidth(72);
+        db.displayPicture.setFitHeight(72);
+        return db;
+    }
+
+    public static DialogBox getErrorDialog(String s, Image i) {
+        DialogBox db = new DialogBox(s, i);
+        db.dialog.getStyleClass().add("error-dialog");
+        db.flip();
+        db.displayPicture.setFitWidth(72);
+        db.displayPicture.setFitHeight(72);
         return db;
     }
 }

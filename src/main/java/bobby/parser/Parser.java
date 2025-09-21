@@ -1,5 +1,6 @@
-package bobby;
+package bobby.parser;
 
+import bobby.bobbyexception.BobbyException;
 import bobby.command.AddDeadlineCommand;
 import bobby.command.AddEventCommand;
 import bobby.command.AddTodoCommand;
@@ -15,6 +16,10 @@ import bobby.command.UnmarkCommand;
  * Parses user input commands and returns the corresponding Command object.
  */
 public class Parser {
+    private static final String[] VALID_COMMANDS = {
+        "list", "mark", "unmark", "delete", "todo", "deadline", "event", "find", "bye", "viewschedule"
+    };
+
     /**
      * Parses the full user command string and returns the appropriate Command object.
      *
@@ -68,7 +73,12 @@ public class Parser {
             }
             return new bobby.command.ViewScheduleCommand(words[1].trim());
         default:
-            throw new BobbyException("Whatdatmean");
+            StringBuilder sb = new StringBuilder();
+            sb.append("Whatdatmean. Here are the commands I understand:\n");
+            for (String cmd : VALID_COMMANDS) {
+                sb.append("- ").append(cmd).append("\n");
+            }
+            throw new BobbyException(sb.toString().trim());
         }
     }
 }

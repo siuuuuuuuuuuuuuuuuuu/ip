@@ -1,4 +1,6 @@
-package bobby;
+package bobby.ui;
+
+import bobby.task.Task;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

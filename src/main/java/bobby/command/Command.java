@@ -1,9 +1,9 @@
 package bobby.command;
 
-import bobby.BobbyException;
-import bobby.Storage;
-import bobby.TaskList;
-import bobby.Ui;
+import bobby.bobbyexception.BobbyException;
+import bobby.storage.Storage;
+import bobby.task.TaskList;
+import bobby.ui.Ui;
 
 /**
  * Abstract base class for all commands in the Bobby application.

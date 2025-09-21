@@ -1,8 +1,8 @@
 package bobby.command;
 
-import bobby.Storage;
-import bobby.TaskList;
-import bobby.Ui;
+import bobby.storage.Storage;
+import bobby.task.TaskList;
+import bobby.ui.Ui;
 
 /**
  * Command to display the list of all tasks to the user.

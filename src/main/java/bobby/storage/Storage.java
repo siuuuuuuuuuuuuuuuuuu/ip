@@ -1,4 +1,9 @@
-package bobby;
+package bobby.storage;
+
+import bobby.task.Deadline;
+import bobby.task.Event;
+import bobby.task.Task;
+import bobby.task.ToDo;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -1,9 +1,8 @@
-package bobby;
+package bobby.task;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import java.util.Comparator;
 /**
  * Manages a list of Task objects, providing operations to add, delete, retrieve, and search tasks.
  */

@@ -1,6 +1,9 @@
 package bobby.command;
 
-import bobby.*;
+import bobby.storage.Storage;
+import bobby.task.TaskList;
+import bobby.task.ToDo;
+import bobby.ui.Ui;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
