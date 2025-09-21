@@ -1,11 +1,11 @@
 package bobby.command;
 
-import bobby.BobbyException;
-import bobby.Deadline;
-import bobby.Storage;
-import bobby.Task;
-import bobby.TaskList;
-import bobby.Ui;
+import bobby.bobbyexception.BobbyException;
+import bobby.task.Deadline;
+import bobby.storage.Storage;
+import bobby.task.Task;
+import bobby.task.TaskList;
+import bobby.ui.Ui;
 
 /**
  * Command to add a new deadline task to the task list.

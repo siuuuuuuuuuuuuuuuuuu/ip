@@ -1,5 +1,6 @@
 package bobby.gui;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,8 +8,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import bobby.Bobby;
-import bobby.Ui;
+import bobby.main.Bobby;
+import bobby.ui.Ui;
+import javafx.util.Duration;
+
 /**
  * Controller for the main GUI.
  */
@@ -39,6 +42,14 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().add(
             DialogBox.getBobbyDialog(Ui.WELCOME_MESSAGE, dukeImage)
         );
+        // Show today's schedule
+        dialogContainer.getChildren().add(
+            DialogBox.getBobbyDialog(bobby.getTodaySchedule(), dukeImage)
+        );
+        // Show todo list
+        dialogContainer.getChildren().add(
+            DialogBox.getBobbyDialog(bobby.getTodoList(), dukeImage)
+        );
     }
 
     /**
@@ -49,15 +60,28 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = bobby.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getBobbyDialog(response, dukeImage)
+        dialogContainer.getChildren().add(
+                DialogBox.getUserDialog(input, userImage)
         );
+        // If response indicates an error, use error dialog
+        if (response != null && (response.startsWith("Error:") || response.startsWith("Whatdatmean") || response.toLowerCase().contains("error"))) {
+            dialogContainer.getChildren().add(
+                DialogBox.getErrorDialog(response, dukeImage)
+            );
+        } else {
+            dialogContainer.getChildren().add(
+                DialogBox.getBobbyDialog(response, dukeImage)
+            );
+        }
         userInput.clear();
-        // Terminate the GUI if the user types 'bye'
+        // Delay and show goodbye message if the user types 'bye'
         if (input.trim().equalsIgnoreCase("bye")) {
-            javafx.stage.Stage stage = (javafx.stage.Stage) dialogContainer.getScene().getWindow();
-            stage.close();
+            PauseTransition delay = new PauseTransition(Duration.seconds(3));
+            delay.setOnFinished(event -> {
+                javafx.stage.Stage stage = (javafx.stage.Stage) dialogContainer.getScene().getWindow();
+                stage.close();
+            });
+            delay.play();
         }
     }
 }

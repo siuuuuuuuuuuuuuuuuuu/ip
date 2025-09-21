@@ -1,4 +1,4 @@
-package bobby;
+package bobby.task;
 
 /**
  * Represents a todo task with a description.

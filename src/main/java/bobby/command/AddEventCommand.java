@@ -1,11 +1,11 @@
 package bobby.command;
 
-import bobby.BobbyException;
-import bobby.TaskList;
-import bobby.Ui;
-import bobby.Event;
-import bobby.Task;
-import bobby.Storage;
+import bobby.bobbyexception.BobbyException;
+import bobby.task.TaskList;
+import bobby.ui.Ui;
+import bobby.task.Event;
+import bobby.task.Task;
+import bobby.storage.Storage;
 
 /**
  * Command to add a new event task to the task list.

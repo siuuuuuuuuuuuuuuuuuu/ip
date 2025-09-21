@@ -1,10 +1,10 @@
 package bobby.command;
 
 import java.util.ArrayList;
-import bobby.Storage;
-import bobby.Task;
-import bobby.TaskList;
-import bobby.Ui;
+import bobby.storage.Storage;
+import bobby.task.Task;
+import bobby.task.TaskList;
+import bobby.ui.Ui;
 
 /**
  * Command to find and display tasks matching a keyword.

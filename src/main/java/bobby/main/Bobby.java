@@ -1,7 +1,16 @@
-package bobby;
+package bobby.main;
 
 import bobby.bobbyexception.BobbyException;
 import bobby.command.Command;
+import bobby.parser.Parser;
+import bobby.storage.Storage;
+import bobby.task.Task;
+import bobby.task.ToDo;
+import bobby.task.TaskList;
+import bobby.ui.Ui;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Main class for the Bobby task manager application.
@@ -71,5 +80,45 @@ public class Bobby {
         } catch (Exception e) {
             return "An unexpected error occurred: " + e.getMessage();
         }
+    }
+
+    /**
+     * Returns a formatted string of today's schedule (Deadlines and Events).
+     */
+    public String getTodaySchedule() {
+        ArrayList<Task> todayTasks = tasks.getTasksForDate(LocalDate.now());
+        if (todayTasks.isEmpty()) {
+            return "You have no events or deadlines scheduled for today.";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("Here is your schedule for today (" + LocalDate.now() + "):\n");
+        int idx = 1;
+        for (Task t : todayTasks) {
+            sb.append(idx++).append(". ").append(t).append("\n");
+        }
+        return sb.toString().trim();
+    }
+
+    /**
+     * Returns a formatted string of all ToDo tasks.
+     */
+    public String getTodoList() {
+        ArrayList<Task> allTasks = tasks.getAll();
+        ArrayList<ToDo> todos = new ArrayList<>();
+        for (Task t : allTasks) {
+            if (t instanceof ToDo) {
+                todos.add((ToDo) t);
+            }
+        }
+        if (todos.isEmpty()) {
+            return "You have no todos in your list.";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("Here is your todo list:\n");
+        int idx = 1;
+        for (ToDo todo : todos) {
+            sb.append(idx++).append(". ").append(todo).append("\n");
+        }
+        return sb.toString().trim();
     }
 }

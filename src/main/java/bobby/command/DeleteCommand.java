@@ -1,10 +1,10 @@
 package bobby.command;
 
-import bobby.BobbyException;
-import bobby.Storage;
-import bobby.Task;
-import bobby.TaskList;
-import bobby.Ui;
+import bobby.bobbyexception.BobbyException;
+import bobby.storage.Storage;
+import bobby.task.Task;
+import bobby.task.TaskList;
+import bobby.ui.Ui;
 
 /**
  * Command to delete a specific task from the task list.

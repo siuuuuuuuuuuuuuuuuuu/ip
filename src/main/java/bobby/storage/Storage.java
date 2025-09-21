@@ -1,4 +1,4 @@
-package bobby;
+package bobby.storage;
 
 import bobby.task.Deadline;
 import bobby.task.Event;

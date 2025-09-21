@@ -1,6 +1,8 @@
 package bobby.command;
 
-import bobby.*;
+import bobby.storage.Storage;
+import bobby.task.TaskList;
+import bobby.ui.Ui;
 
 /**
  * Command to exit the Bobby application.

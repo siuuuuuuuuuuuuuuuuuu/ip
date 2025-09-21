@@ -1,11 +1,10 @@
 package bobby;
 
+import bobby.task.TaskList;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
-import bobby.Task;
-import bobby.TaskList;
-import bobby.DummyTask;
+import bobby.task.Task;
 
 public class TaskListTest {
     @Test

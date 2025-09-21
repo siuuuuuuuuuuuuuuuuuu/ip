@@ -1,5 +1,6 @@
 package bobby;
 
+import bobby.task.Deadline;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDateTime;

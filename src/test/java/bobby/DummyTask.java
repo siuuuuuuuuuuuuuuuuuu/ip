@@ -1,6 +1,6 @@
 package bobby;
 
-import bobby.Task;
+import bobby.task.Task;
 
 public class DummyTask extends Task {
     public DummyTask(String description) {

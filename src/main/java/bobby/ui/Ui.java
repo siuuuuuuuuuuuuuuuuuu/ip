@@ -1,4 +1,4 @@
-package bobby;
+package bobby.ui;
 
 import bobby.task.Task;
 

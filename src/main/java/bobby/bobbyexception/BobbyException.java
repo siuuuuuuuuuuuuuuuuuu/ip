@@ -1,5 +1,5 @@
 // src/main/java/bobby/BobbyException.java
-package bobby;
+package bobby.bobbyexception;
 
 /**
  * Custom exception class for Bobby application errors.

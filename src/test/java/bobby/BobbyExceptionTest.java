@@ -1,5 +1,6 @@
 package bobby;
 
+import bobby.bobbyexception.BobbyException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

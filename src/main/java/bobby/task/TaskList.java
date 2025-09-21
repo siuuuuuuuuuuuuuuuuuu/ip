@@ -1,8 +1,4 @@
-package bobby;
-
-import bobby.task.Deadline;
-import bobby.task.Event;
-import bobby.task.Task;
+package bobby.task;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

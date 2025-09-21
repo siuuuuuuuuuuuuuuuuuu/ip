@@ -1,4 +1,4 @@
-package bobby;
+package bobby.task;
 
 /**
  * Abstract base class representing a task in the Bobby application.

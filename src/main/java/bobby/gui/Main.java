@@ -6,15 +6,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Region;
-import bobby.Bobby;
+import bobby.main.Bobby;
 
 public class Main extends Application {
     private final Bobby bobby = new Bobby("data/tasks.txt");
@@ -26,6 +19,8 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.setWidth(700);
+            stage.setMinWidth(500);
             fxmlLoader.<MainWindow>getController().setBobby(bobby);
             stage.show();
         } catch (IOException e) {
