@@ -1,5 +1,6 @@
 package bobby;
 
+import bobby.bobbyexception.BobbyException;
 import bobby.command.Command;
 
 /**
