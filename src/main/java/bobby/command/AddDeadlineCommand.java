@@ -6,6 +6,7 @@ import bobby.storage.Storage;
 import bobby.task.Task;
 import bobby.task.TaskList;
 import bobby.ui.Ui;
+import java.time.format.DateTimeParseException;
 
 /**
  * Command to add a new deadline task to the task list.
@@ -35,7 +36,15 @@ public class AddDeadlineCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
-        Task deadline = new Deadline(description, by);
+        Task deadline;
+        try {
+            deadline = new Deadline(description, by);
+        } catch (DateTimeParseException e) {
+            throw new BobbyException("Invalid date/time for deadline. Please use d/M/yyyy HHmm, e.g., 19/09/2025 1800, and ensure the date exists.");
+        }
+        if (tasks.containsDuplicate(deadline)) {
+            throw new BobbyException("A deadline with the same description and date already exists.");
+        }
         tasks.add(deadline);
         StringBuilder response = new StringBuilder();
         response.append("Added: ").append(deadline.toString()).append(System.lineSeparator());

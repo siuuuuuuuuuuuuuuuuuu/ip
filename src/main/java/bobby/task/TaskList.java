@@ -115,4 +115,19 @@ public class TaskList {
         }
         return result;
     }
+
+    /**
+     * Checks if a duplicate of the given task exists in the list.
+     *
+     * @param task Task to check for duplication.
+     * @return true if a duplicate exists, false otherwise.
+     */
+    public boolean containsDuplicate(Task task) {
+        for (Task t : tasks) {
+            if (t.equals(task)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -7,6 +7,8 @@ import bobby.task.Event;
 import bobby.task.Task;
 import bobby.storage.Storage;
 
+import java.time.LocalDateTime;
+
 /**
  * Command to add a new event task to the task list.
  */
@@ -38,7 +40,18 @@ public class AddEventCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BobbyException {
-        Task event = new Event(description, from, to);
+        Event event;
+        try {
+            event = new Event(description, from, to);
+        } catch (BobbyException e) {
+            throw new BobbyException("Invalid date/time for event. Please use d/M/yyyy HHmm, e.g., 19/09/2025 1800, and ensure the date exists.");
+        }
+        if (!event.getFrom().isBefore(event.getTo())) {
+            throw new BobbyException("Event start date/time must be before end date/time.");
+        }
+        if (tasks.containsDuplicate(event)) {
+            throw new BobbyException("An event with the same description, start, and end already exists.");
+        }
         tasks.add(event);
         StringBuilder response = new StringBuilder();
         response.append("Added: ").append(event.toString()).append(System.lineSeparator());
