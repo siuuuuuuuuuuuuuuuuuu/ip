@@ -35,12 +35,21 @@ public class Parser {
         case "list":
             return new ListCommand();
         case "mark":
+            if (words.length < 2 || words[1].trim().isEmpty()) {
+                throw new BobbyException("Please specify the task number to mark.");
+            }
             int doneIndex = Integer.parseInt(words[1]) - 1;
             return new MarkCommand(doneIndex);
         case "unmark":
+            if (words.length < 2 || words[1].trim().isEmpty()) {
+                throw new BobbyException("Please specify the task number to unmark.");
+            }
             int undoneIndex = Integer.parseInt(words[1]) - 1;
             return new UnmarkCommand(undoneIndex);
         case "delete":
+            if (words.length < 2 || words[1].trim().isEmpty()) {
+                throw new BobbyException("Please specify the task number to delete.");
+            }
             int deleteIndex = Integer.parseInt(words[1]) - 1;
             return new DeleteCommand(deleteIndex);
         case "todo":
@@ -49,15 +58,27 @@ public class Parser {
             }
             return new AddTodoCommand(words[1].trim());
         case "deadline":
+            if (words.length < 2 || words[1].trim().isEmpty()) {
+                throw new BobbyException("Deadline must have both a description and a /by date famalam");
+            }
             String[] deadlineParts = words[1].split("/by", 2);
             if (deadlineParts.length < 2) {
                 throw new BobbyException("Deadline must have a /by date famalam");
             }
+            if (deadlineParts[0].trim().isEmpty() || deadlineParts[1].trim().isEmpty()) {
+                throw new BobbyException("Deadline must have both a description and a /by date famalam");
+            }
             return new AddDeadlineCommand(deadlineParts[0].trim(), deadlineParts[1].trim());
         case "event":
+            if (words.length < 2 || words[1].trim().isEmpty()) {
+                throw new BobbyException("Event must have a description, a /from date, and a /to date bro try again!");
+            }
             String[] eventParts = words[1].split("/from|/to");
             if (eventParts.length < 3) {
                 throw new BobbyException("Event must have /from and /to dates bro try again!");
+            }
+            if (eventParts[0].trim().isEmpty() || eventParts[1].trim().isEmpty() || eventParts[2].trim().isEmpty()) {
+                throw new BobbyException("Event must have a description, a /from date, and a /to date bro try again!");
             }
             return new AddEventCommand(eventParts[0].trim(), eventParts[1].trim(), eventParts[2].trim());
         case "find":
@@ -74,10 +95,17 @@ public class Parser {
             return new bobby.command.ViewScheduleCommand(words[1].trim());
         default:
             StringBuilder sb = new StringBuilder();
-            sb.append("Whatdatmean. Here are the commands I understand:\n");
-            for (String cmd : VALID_COMMANDS) {
-                sb.append("- ").append(cmd).append("\n");
-            }
+            sb.append("Whatdatmean! I can do these commands:\n");
+            sb.append("- list\n");
+            sb.append("- mark <task number>\n");
+            sb.append("- unmark <task number>\n");
+            sb.append("- delete <task number>\n");
+            sb.append("- todo <description>\n");
+            sb.append("- deadline <description> /by <date time>\n");
+            sb.append("- event <description> /from <date time> /to <date time>\n");
+            sb.append("- find <keyword>\n");
+            sb.append("- viewschedule <date>\n");
+            sb.append("- bye\n");
             throw new BobbyException(sb.toString().trim());
         }
     }
