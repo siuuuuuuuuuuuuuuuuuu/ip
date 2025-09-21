@@ -14,6 +14,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Represents a dialog box consisting of a label for text and an image for the display picture.
+ * Used for displaying user, bot, and error messages in the chat window.
+ */
 public class DialogBox extends HBox{
 
     @FXML
@@ -21,6 +25,12 @@ public class DialogBox extends HBox{
     @FXML
     private ImageView displayPicture;
 
+    /**
+     * Constructs a DialogBox with the specified text and image.
+     *
+     * @param text The message to display in the dialog box.
+     * @param img The image to display (e.g., user or bot avatar).
+     */
     public DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
@@ -43,7 +53,8 @@ public class DialogBox extends HBox{
     }
 
     /**
-     * flips dialog box such that the ImageView is on the left and text on the right.
+     * Flips the dialog box such that the ImageView is on the left and text on the right.
+     * Used for bot and error messages.
      */
 
     private void flip() {
@@ -53,6 +64,13 @@ public class DialogBox extends HBox{
         setAlignment(Pos.TOP_LEFT);
     }
 
+    /**
+     * Creates a dialog box for user messages.
+     *
+     * @param s The user message.
+     * @param i The user's display image.
+     * @return A DialogBox styled for user messages.
+     */
     public static DialogBox getUserDialog(String s, Image i) {
         DialogBox db = new DialogBox(s, i);
         db.dialog.getStyleClass().add("user-dialog");
@@ -62,6 +80,13 @@ public class DialogBox extends HBox{
         return db;
     }
 
+    /**
+     * Creates a dialog box for bot messages.
+     *
+     * @param s The bot's message.
+     * @param i The bot's display image.
+     * @return A DialogBox styled for bot messages.
+     */
     public static DialogBox getBobbyDialog(String s, Image i) {
         DialogBox db = new DialogBox(s, i);
         db.dialog.getStyleClass().add("bot-dialog");
@@ -71,8 +96,15 @@ public class DialogBox extends HBox{
         return db;
     }
 
-    public static DialogBox getErrorDialog(String s, Image i) {
-        DialogBox db = new DialogBox(s, i);
+    /**
+     * Creates a dialog box for error messages (displayed in red).
+     *
+     * @param text The error message.
+     * @param img The bot's display image.
+     * @return A DialogBox styled for error messages.
+     */
+    public static DialogBox getErrorDialog(String text, Image img) {
+        DialogBox db = new DialogBox(text, img);
         db.dialog.getStyleClass().add("error-dialog");
         db.flip();
         db.displayPicture.setFitWidth(72);

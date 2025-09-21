@@ -1,4 +1,3 @@
-// src/main/java/bobby/BobbyException.java
 package bobby.bobbyexception;
 
 /**
