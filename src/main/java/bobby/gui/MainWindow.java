@@ -2,7 +2,6 @@ package bobby.gui;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -22,39 +21,57 @@ public class MainWindow extends AnchorPane {
     private VBox dialogContainer;
     @FXML
     private TextField userInput;
-    @FXML
-    private Button sendButton;
 
     private Bobby bobby;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/131DC1C4-04BE-41DB-B15D-5D55A1F44DA3_4_5005_c.jpeg"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/D72925AD-1ED8-4147-8382-714C9825A3CD.jpeg"));
+    private final Image userImage;
+    private final Image bobbyImage;
 
+    public MainWindow() {
+        // Load images with null checks to avoid NullPointerException
+        var userStream = this.getClass().getResourceAsStream("/images/131DC1C4-04BE-41DB-B15D-5D55A1F44DA3_4_5005_c.jpeg");
+        if (userStream == null) {
+            throw new IllegalStateException("User image resource not found");
+        }
+        userImage = new Image(userStream);
+        var bobbyStream = this.getClass().getResourceAsStream("/images/D72925AD-1ED8-4147-8382-714C9825A3CD.jpeg");
+        if (bobbyStream == null) {
+            throw new IllegalStateException("Duke image resource not found");
+        }
+        bobbyImage = new Image(bobbyStream);
+    }
+
+    /**
+     * Initializes the main window. Binds the scroll pane to the dialog container height.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
+    /**
+     * Injects the Bobby instance and displays the welcome message, today's schedule, and todo list.
+     *
+     * @param d The Bobby instance to use for responses.
+     */
     public void setBobby(Bobby d) {
         bobby = d;
         // Show welcome message in GUI using the constant from Ui
         dialogContainer.getChildren().add(
-            DialogBox.getBobbyDialog(Ui.WELCOME_MESSAGE, dukeImage)
+            DialogBox.getBobbyDialog(Ui.WELCOME_MESSAGE, bobbyImage)
         );
         // Show today's schedule
         dialogContainer.getChildren().add(
-            DialogBox.getBobbyDialog(bobby.getTodaySchedule(), dukeImage)
+            DialogBox.getBobbyDialog(bobby.getTodaySchedule(), bobbyImage)
         );
         // Show todo list
         dialogContainer.getChildren().add(
-            DialogBox.getBobbyDialog(bobby.getTodoList(), dukeImage)
+            DialogBox.getBobbyDialog(bobby.getTodoList(), bobbyImage)
         );
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Handles user input: displays user and bot dialogs, processes commands, and handles exit.
      */
     @FXML
     private void handleUserInput() {
@@ -66,11 +83,11 @@ public class MainWindow extends AnchorPane {
         // If response indicates an error, use error dialog
         if (response != null && (response.startsWith("Error:") || response.startsWith("Whatdatmean") || response.toLowerCase().contains("error"))) {
             dialogContainer.getChildren().add(
-                DialogBox.getErrorDialog(response, dukeImage)
+                DialogBox.getErrorDialog(response, bobbyImage)
             );
         } else {
             dialogContainer.getChildren().add(
-                DialogBox.getBobbyDialog(response, dukeImage)
+                DialogBox.getBobbyDialog(response, bobbyImage)
             );
         }
         userInput.clear();

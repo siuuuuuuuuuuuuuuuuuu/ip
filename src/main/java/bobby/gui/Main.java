@@ -9,9 +9,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import bobby.main.Bobby;
 
+/**
+ * Main entry point for the JavaFX GUI application.
+ */
 public class Main extends Application {
     private final Bobby bobby = new Bobby("data/tasks.txt");
 
+    /**
+     * Starts the JavaFX application and sets up the main window.
+     *
+     * @param stage The primary stage for this application.
+     */
     @Override
     public void start(Stage stage) {
         try {
@@ -25,7 +33,8 @@ public class Main extends Application {
             fxmlLoader.<MainWindow>getController().setBobby(bobby);
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            // Use robust logging instead of printStackTrace
+            System.err.println("Failed to load main window: " + e.getMessage());
         }
     }
 }
