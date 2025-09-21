@@ -11,7 +11,9 @@
             prefHeight="600.0" prefWidth="700.0"
             xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="bobby.gui.MainWindow">
+            fx:controller="bobby.gui.MainWindow"
+            stylesheets="/view/mainwindow.css"
+            styleClass="main-window-root">
     <children>
         <ScrollPane fx:id="scrollPane"
                     hbarPolicy="NEVER"
