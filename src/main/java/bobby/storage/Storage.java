@@ -105,4 +105,64 @@ public class Storage {
         }
         return tasks;
     }
+
+    /**
+     * Loads tasks from the file.
+     * Returns an empty list if the file does not exist or lines are malformed.
+     *
+     * @return ArrayList of loaded tasks.
+     * @throws IOException If an I/O error occurs during loading.
+     */
+    public ArrayList<Task> loadTasksWithWarnings(ArrayList<String> warnings) throws IOException {
+        ArrayList<Task> tasks = new ArrayList<>();
+        Path path = Paths.get(filePath);
+        if (!Files.exists(path)) {
+            return tasks; // Return empty list if file doesn't exist
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            int lineNum = 1;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(" \\| ");
+                String type = parts[0];
+                boolean isDone = parts.length > 1 && parts[1].equals("1");
+                String description = parts.length > 2 ? parts[2] : "";
+                Task task = null;
+                try {
+                    switch (type) {
+                    case "T":
+                        task = new ToDo(description);
+                        break;
+                    case "D":
+                        if (parts.length < 4) throw new Exception("Malformed deadline line");
+                        String by = parts[3];
+                        task = new Deadline(description, by);
+                        break;
+                    case "E":
+                        if (parts.length < 5) throw new Exception("Malformed event line");
+                        String from = parts[3];
+                        String to = parts[4];
+                        task = new Event(description, from, to);
+                        break;
+                    default:
+                        warnings.add("Line " + lineNum + ": Unknown task type, skipped.");
+                        break;
+                    }
+                } catch (Exception e) {
+                    warnings.add("Line " + lineNum + ": Malformed or corrupt, skipped. Reason: " + e.getMessage());
+                    continue;
+                }
+                if (task != null && isDone) {
+                    task.markAsDone();
+                }
+                if (task != null) {
+                    tasks.add(task);
+                }
+                lineNum++;
+            }
+        } catch (IOException e) {
+            throw new IOException("Could not read tasks file: " + e.getMessage(), e);
+        }
+        return tasks;
+    }
 }

@@ -29,7 +29,9 @@ public class Parser {
      */
     public static Command parse(String fullCommand) throws BobbyException {
         assert fullCommand != null : "Input command should not be null";
-        String[] words = fullCommand.trim().split(" ", 2);
+        // Normalize input: trim and replace multiple spaces with single space
+        fullCommand = fullCommand.trim().replaceAll("\\s+", " ");
+        String[] words = fullCommand.split(" ", 2);
         String command = words[0];
         switch (command) {
         case "list":
@@ -38,28 +40,43 @@ public class Parser {
             if (words.length < 2 || words[1].trim().isEmpty()) {
                 throw new BobbyException("Please specify the task number to mark.");
             }
-            int doneIndex = Integer.parseInt(words[1]) - 1;
+            if (!words[1].trim().matches("\\d+")) {
+                throw new BobbyException("Task number for mark must be a positive integer.");
+            }
+            int doneIndex = Integer.parseInt(words[1].trim()) - 1;
             return new MarkCommand(doneIndex);
         case "unmark":
             if (words.length < 2 || words[1].trim().isEmpty()) {
                 throw new BobbyException("Please specify the task number to unmark.");
             }
-            int undoneIndex = Integer.parseInt(words[1]) - 1;
+            if (!words[1].trim().matches("\\d+")) {
+                throw new BobbyException("Task number for unmark must be a positive integer.");
+            }
+            int undoneIndex = Integer.parseInt(words[1].trim()) - 1;
             return new UnmarkCommand(undoneIndex);
         case "delete":
             if (words.length < 2 || words[1].trim().isEmpty()) {
                 throw new BobbyException("Please specify the task number to delete.");
             }
-            int deleteIndex = Integer.parseInt(words[1]) - 1;
+            if (!words[1].trim().matches("\\d+")) {
+                throw new BobbyException("Task number for delete must be a positive integer.");
+            }
+            int deleteIndex = Integer.parseInt(words[1].trim()) - 1;
             return new DeleteCommand(deleteIndex);
         case "todo":
             if (words.length < 2 || words[1].trim().isEmpty()) {
                 throw new BobbyException("Whatdatmean the description of a todo cannot be empty.");
             }
+            if (words[1].contains("/")) {
+                throw new BobbyException("Todo description should not contain '/' characters.");
+            }
             return new AddTodoCommand(words[1].trim());
         case "deadline":
             if (words.length < 2 || words[1].trim().isEmpty()) {
                 throw new BobbyException("Deadline must have both a description and a /by date famalam");
+            }
+            if (words[1].split("/by").length > 2) {
+                throw new BobbyException("Deadline command should only have one /by.");
             }
             String[] deadlineParts = words[1].split("/by", 2);
             if (deadlineParts.length < 2) {
@@ -68,10 +85,16 @@ public class Parser {
             if (deadlineParts[0].trim().isEmpty() || deadlineParts[1].trim().isEmpty()) {
                 throw new BobbyException("Deadline must have both a description and a /by date famalam");
             }
+            if (deadlineParts[0].contains("/")) {
+                throw new BobbyException("Deadline description should not contain '/' except for /by.");
+            }
             return new AddDeadlineCommand(deadlineParts[0].trim(), deadlineParts[1].trim());
         case "event":
             if (words.length < 2 || words[1].trim().isEmpty()) {
                 throw new BobbyException("Event must have a description, a /from date, and a /to date bro try again!");
+            }
+            if (words[1].split("/from").length > 2 || words[1].split("/to").length > 2) {
+                throw new BobbyException("Event command should only have one /from and one /to.");
             }
             String[] eventParts = words[1].split("/from|/to");
             if (eventParts.length < 3) {
@@ -79,6 +102,9 @@ public class Parser {
             }
             if (eventParts[0].trim().isEmpty() || eventParts[1].trim().isEmpty() || eventParts[2].trim().isEmpty()) {
                 throw new BobbyException("Event must have a description, a /from date, and a /to date bro try again!");
+            }
+            if (eventParts[0].contains("/")) {
+                throw new BobbyException("Event description should not contain '/' except for /from and /to.");
             }
             return new AddEventCommand(eventParts[0].trim(), eventParts[1].trim(), eventParts[2].trim());
         case "find":
